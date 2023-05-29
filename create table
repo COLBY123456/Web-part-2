@@ -1,0 +1,35 @@
+// Include the DBConn.php file
+include 'DBConn.php';
+
+// Check if the "tblUser" table exists
+$sql = "SELECT 1 FROM tblUser LIMIT 1";
+$result = mysqli_query($conn, $sql);
+
+if ($result === false) {
+// Create the "tblUser" table
+$sql = "CREATE TABLE tblUser (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL,
+password VARCHAR(255) NOT NULL
+)";
+mysqli_query($conn, $sql);
+
+// Load data from the "userData.txt" file
+$file = fopen("userData.txt", "r");
+while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+    $name = $data[0];
+    $email = $data[1];
+    $password = $data[2];
+    
+    // Insert data into the "tblUser" table
+    $sql = "INSERT INTO tblUser (name, email, password) 
+            VALUES ('$name', '$email', '$password')";
+    mysqli_query($conn, $sql);
+}
+fclose($file);
+}
+
+// Redirect to the login page
+header("Location: login.php");
+exit;
