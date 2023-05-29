@@ -1,0 +1,56 @@
+<?php
+	// Connect to MySQL server
+$conn = mysqli_connect("localhost", "username", "password");
+
+// Create the "bookstore" database
+$sql = "CREATE DATABASE bookstore";
+mysqli_query($conn, $sql);
+
+// Select the "bookstore" database
+mysqli_select_db($conn, "bookstore");
+
+// Create the "tblUser" table
+$sql = "CREATE TABLE tblUser (
+    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    age INT(3) NOT NULL
+)";
+
+mysqli_query($conn, $sql);
+
+// Create the "tblAdmin" table
+$sql = "CREATE TABLE tblAdmin (
+    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+)";
+
+mysqli_query($conn, $sql);
+
+// Create the "tblAorder" table
+$sql = "CREATE TABLE tblAorder (
+    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED,
+    book_id INT(6) UNSIGNED,
+    quantity INT(3) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES tblUser(id),
+    FOREIGN KEY (book_id) REFERENCES tblBooks(id)
+)";
+
+mysqli_query($conn, $sql);
+
+// Create the "tblBooks" table
+$sql = "CREATE TABLE tblBooks (
+    id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    price DECIMAL(10,2) NOT NULL
+)";
+
+mysqli_query($conn, $sql);
+
+// Close the MySQL connection
+mysqli_close($conn);
+?>
