@@ -1,0 +1,17 @@
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>">
+    <br>
+    <label for="student_num">Student Number:</label>
+    <input type="text" name="student_num" value="<?php echo htmlspecialchars($student_num); ?>">
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password">
+    <br>
+    <input type="submit" value="Login">
+</form>
+<?php
+// Display error message if one exists
+if (!empty($error)) {
+    echo "<p style='color: red;'>" . $error . "</p>";
+}
